@@ -2,10 +2,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-forest: #1B4332;
-  --color-moss: #2D6A4F;
-  --color-emerald-accent: #D4A017; /* Saffron Gold */
-  --color-cream: #FEFAE0;
+  --color-forest: #022C22;
+  --color-moss: #064E3B;
+  --color-emerald-accent: #34D399;
+  --color-cream: #F0FDF4;
 
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Playfair Display', ui-serif, Georgia, serif;
@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Custom utilities */
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(to right, #D4A017, #F2C94C);
+    background: linear-gradient(to right, #34D399, #6EE7B7);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
