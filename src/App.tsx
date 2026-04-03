@@ -61,7 +61,7 @@ export default function App() {
   const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     if (!user) {
       return (
-        <div className="min-h-screen pt-40 text-center px-6">
+        <div className="min-h-screen pt-48 text-center px-6">
           <h2 className="text-3xl font-display font-bold text-cream mb-4">Login Required</h2>
           <p className="text-emerald-accent/60 mb-8">Please sign in to access this page.</p>
           <button onClick={() => setShowAuth(true)} className="bg-emerald-accent text-forest px-8 py-3 rounded-full font-bold hover:bg-emerald-accent/90 transition-colors">
