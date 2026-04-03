@@ -172,43 +172,51 @@ function BMITool() {
 
 function CalorieTool() {
   const [food, setFood] = useState('');
-  const [results, setResults] = useState<any[]>([]);
-  const [searched, setSearched] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
-  const searchFood = () => {
-    if (!food) return;
-    setSearched(true);
-    const matches = indianFoods.filter(i => i.name.toLowerCase().includes(food.toLowerCase()));
-    setResults(matches.length > 0 ? matches : []);
+  // Live filter: split search into words, match ANY word against food name
+  const getFilteredFoods = () => {
+    if (!food.trim()) return showAll ? indianFoods : [];
+    const words = food.toLowerCase().split(/\s+/);
+    return indianFoods.filter(item => {
+      const name = item.name.toLowerCase();
+      const type = item.type.toLowerCase();
+      return words.some(w => name.includes(w) || type.includes(w));
+    });
   };
+
+  const filtered = getFilteredFoods();
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-display text-cream font-bold">Indian Food Calorie Checker</h2>
       <p className="text-emerald-accent/60 text-sm mb-6">Search 30+ Indian dishes to check calories, protein, and Ayurvedic properties.</p>
       
-      <div className="flex gap-3">
-        <input type="text" value={food} onChange={e => { setFood(e.target.value); setSearched(false); }} onKeyDown={e => e.key === 'Enter' && searchFood()} className="flex-1 p-4 bg-forest/40 rounded-2xl border border-white/5 text-cream focus:border-emerald-accent outline-none" placeholder="e.g. Dal, Biryani, Chai, Dosa..." />
-        <button onClick={searchFood} className="bg-emerald-accent text-forest px-8 rounded-2xl font-bold hover:bg-emerald-accent/90 transition-colors">Search</button>
+      <div>
+        <input type="text" value={food} onChange={e => setFood(e.target.value)} className="w-full p-4 bg-forest/40 rounded-2xl border border-white/5 text-cream focus:border-emerald-accent outline-none" placeholder="Start typing... e.g. Dal, Chicken, Sweet, Pitta..." />
       </div>
 
       {/* Quick picks */}
       <div className="flex flex-wrap gap-2">
-        <span className="text-xs text-emerald-accent/40">Popular:</span>
-        {["Dal", "Biryani", "Roti", "Chai", "Paneer", "Samosa"].map(tag => (
-          <button key={tag} onClick={() => { setFood(tag); setTimeout(searchFood, 0); }} className="text-xs px-3 py-1 bg-forest/50 border border-white/5 rounded-full text-emerald-accent/60 hover:text-emerald-accent hover:border-emerald-accent/30 transition-colors">{tag}</button>
+        <span className="text-xs text-emerald-accent/40">Quick:</span>
+        {["Dal", "Biryani", "Roti", "Chai", "Paneer", "Samosa", "Dosa", "Rice"].map(tag => (
+          <button key={tag} onClick={() => setFood(tag)} className={`text-xs px-3 py-1 rounded-full border transition-colors ${food === tag ? 'bg-emerald-accent text-forest border-emerald-accent' : 'bg-forest/50 border-white/5 text-emerald-accent/60 hover:text-emerald-accent hover:border-emerald-accent/30'}`}>{tag}</button>
         ))}
+        <button onClick={() => { setFood(''); setShowAll(!showAll); }} className="text-xs px-3 py-1 bg-forest/50 border border-white/5 rounded-full text-emerald-accent/60 hover:text-emerald-accent hover:border-emerald-accent/30 transition-colors">
+          {showAll ? 'Hide All' : 'Show All'}
+        </button>
       </div>
 
-      {searched && results.length > 0 && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3 mt-6">
-          {results.map((r, i) => (
+      {filtered.length > 0 && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3 mt-4 max-h-[400px] overflow-y-auto pr-2 scrollbar-hide">
+          <p className="text-xs text-emerald-accent/40">{filtered.length} result{filtered.length !== 1 ? 's' : ''} found</p>
+          {filtered.map((r, i) => (
             <div key={i} className="p-4 bg-forest/40 border border-white/5 rounded-2xl flex justify-between items-center hover:border-emerald-accent/20 transition-colors">
               <div>
                 <p className="font-bold text-cream">{r.name}</p>
                 <p className="text-xs text-emerald-accent/50 mt-1">{r.type}</p>
               </div>
-              <div className="text-right">
+              <div className="text-right shrink-0 ml-4">
                 <p className="text-2xl font-display font-bold text-cream">{r.cal}</p>
                 <p className="text-[10px] text-emerald-accent/40 uppercase tracking-widest">kcal ・ {r.protein}g protein</p>
               </div>
@@ -217,8 +225,8 @@ function CalorieTool() {
         </motion.div>
       )}
 
-      {searched && results.length === 0 && (
-        <div className="text-center py-10 text-emerald-accent/40">No results found. Try searching "Dal", "Biryani", or "Chai".</div>
+      {food.trim() && filtered.length === 0 && (
+        <div className="text-center py-10 text-emerald-accent/40">No results found for "{food}". Try a different keyword.</div>
       )}
     </div>
   );
