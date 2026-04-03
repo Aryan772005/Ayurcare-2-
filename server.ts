@@ -10,9 +10,6 @@ import appointmentRoutes from "./src/routes/appointmentRoutes";
 import heartRateRoutes from "./src/routes/heartRateRoutes";
 import aiRoutes from "./src/routes/aiRoutes";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const app = express();
 const PORT = 3000;
 
@@ -21,7 +18,11 @@ app.use(express.json());
 
 // API Routes
 app.get("/api/health", (req, res) => {
-  res.json({ status: "ok", message: "Ayurcare+ Backend is running" });
+  res.json({ 
+    status: "ok", 
+    message: "Ayurcare+ Backend is running",
+    nvidiaKeySet: !!process.env.NVIDIA_API_KEY
+  });
 });
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
@@ -34,6 +35,9 @@ export default app;
 
 async function startServer() {
   try {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+
     // Vite middleware for development
     if (process.env.NODE_ENV !== "production") {
       console.log("Starting Vite in development mode...");

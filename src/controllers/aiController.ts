@@ -10,8 +10,9 @@ export const getAIAnalysis = async (req: Request, res: Response) => {
   try {
     const analysis = await analyzeSymptoms(symptoms);
     res.status(200).json(analysis);
-  } catch (error) {
+  } catch (error: any) {
     console.error("AI Controller Error:", error);
-    res.status(500).json({ error: "Failed to analyze symptoms" });
+    const errorMessage = error.message || "Failed to analyze symptoms";
+    res.status(500).json({ error: errorMessage });
   }
 };
