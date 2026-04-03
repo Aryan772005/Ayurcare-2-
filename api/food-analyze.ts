@@ -12,8 +12,16 @@ export default async function handler(req: any, res: any) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const rawKey = process.env.NVIDIA_API_KEY || process.env.NIVIDIA_API_KEY || process.env.NVIDIA_KEY || process.env.NVIDIA_PI_KEY || '';
-  const apiKey = rawKey.trim();
+  let rawKey = process.env.NVIDIA_API_KEY || process.env.NIVIDIA_API_KEY || process.env.NVIDIA_KEY || process.env.NVIDIA_PI_KEY || '';
+  let apiKey = rawKey.trim();
+
+  // Strip 'Bearer ' if the user accidentally included it natively or via copy-paste
+  if (apiKey.startsWith('Bearer ')) {
+    apiKey = apiKey.substring(7).trim();
+  }
+  
+  // Strip enclosing quotes that sometimes happen with env var misconfigurations
+  apiKey = apiKey.replace(/^["']|["']$/g, '');
 
   // If no NVIDIA key, we fallback
   if (!apiKey) {
@@ -79,11 +87,13 @@ export default async function handler(req: any, res: any) {
     
     console.log("Raw AI response:", aiText);
 
-    // Clean potential markdown quotes
+    // Clean potential markdown quotes and extract JSON smartly
     aiText = aiText.replace(/```json\n?|```/g, '').trim();
+    const jsonMatch = aiText.match(/\{[\s\S]*\}/);
+    const jsonText = jsonMatch ? jsonMatch[0] : aiText;
     
     try {
-      const parsed = JSON.parse(aiText);
+      const parsed = JSON.parse(jsonText);
       console.log("Successfully parsed AI response");
       return res.status(200).json(parsed);
     } catch {
