@@ -1,6 +1,10 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 
-const NVIDIA_API_KEY = "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";
+const NVIDIA_API_KEY = process.env.NVIDIA_API_KEY;
+
+if (!NVIDIA_API_KEY) {
+  console.warn("NVIDIA_API_KEY is not set in environment variables");
+}
 
 export default async function handler(req: any, res: any) {
   // CORS headers
