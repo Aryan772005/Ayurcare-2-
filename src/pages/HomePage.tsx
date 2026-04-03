@@ -64,13 +64,14 @@ export default function HomePage({ onLogin, user }: { onLogin: () => void, user:
               boxShadow: '0 24px 64px rgba(0,0,0,0.45)',
             }}>
               <img
-                src="/assets/hero-wellness.jpg"
-                alt="Ayurvedic Wellness"
+                src="/ayurveda-hero.png"
+                alt="Ayurvedic herbs and wellness"
+                loading="lazy"
                 style={{
                   width: '100%',
-                  height: '260px',
+                  height: '280px',
                   objectFit: 'cover',
-                  objectPosition: 'center top',
+                  objectPosition: 'center center',
                   display: 'block',
                 }}
               />
