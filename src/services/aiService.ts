@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const analyzeSymptoms = async (symptoms: string) => {
-  let apiKey = process.env.NVIDIA_API_KEY;
+  let apiKey = process.env.NVIDIA_API_KEY?.trim();
   
   if (!apiKey) {
     throw new Error("NVIDIA_API_KEY is not configured in the environment variables.");
@@ -9,8 +9,10 @@ export const analyzeSymptoms = async (symptoms: string) => {
 
   // Strip 'Bearer ' if the user included it in the environment variable
   if (apiKey.startsWith('Bearer ')) {
-    apiKey = apiKey.substring(7);
+    apiKey = apiKey.substring(7).trim();
   }
+  
+  apiKey = apiKey.replace(/^["']|["']$/g, '');
 
   const prompt = `As an Ayurvedic assistant for Ayurcare+, analyze the following symptoms and provide a structured response in JSON format.
   Symptoms: ${symptoms}

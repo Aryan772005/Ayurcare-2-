@@ -15,8 +15,16 @@ export default async function handler(req: any, res: any) {
   }
 
   // Read API key inside handler. Check for common typos the user might have made in Vercel.
-  const rawKey = process.env.NVIDIA_API_KEY || process.env.NIVIDIA_API_KEY || process.env.NVIDIA_KEY || process.env.NVIDIA_PI_KEY || '';
-  const apiKey = rawKey.trim();
+  let rawKey = process.env.NVIDIA_API_KEY || process.env.NIVIDIA_API_KEY || process.env.NVIDIA_KEY || process.env.NVIDIA_PI_KEY || '';
+  let apiKey = rawKey.trim();
+
+  // Strip 'Bearer ' if the user accidentally included it natively or via copy-paste
+  if (apiKey.startsWith('Bearer ')) {
+    apiKey = apiKey.substring(7).trim();
+  }
+  
+  // Strip enclosing quotes that sometimes happen with env var misconfigurations
+  apiKey = apiKey.replace(/^["']|["']$/g, '');
 
   if (!apiKey) {
     console.error("NVIDIA_API_KEY is not set in environment variables");
