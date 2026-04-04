@@ -14,7 +14,7 @@ export default function DoctorsPage({ user }: { user: FirebaseUser | null }) {
   );
 
   return (
-    <div className="min-h-screen pt-32 px-6 pb-20 max-w-7xl mx-auto">
+    <div className="min-h-screen pt-48 px-6 pb-20 max-w-7xl mx-auto">
       <header className="mb-12 text-center max-w-2xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-display font-bold text-cream mb-4">Ayurvedic Experts</h1>
         <p className="text-emerald-accent/60 text-lg">Consult top-rated Indian doctors specializing in diverse Ayurvedic fields for just ₹1.</p>

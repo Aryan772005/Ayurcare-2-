@@ -85,7 +85,7 @@ export default function ChatPage({ user }: { user: FirebaseUser | null }) {
   };
 
   return (
-    <div className="min-h-screen pt-24 px-4 pb-0 max-w-4xl mx-auto flex flex-col h-screen">
+    <div className="min-h-screen pt-44 px-4 pb-0 max-w-4xl mx-auto flex flex-col h-screen">
       <header className="mb-6 mt-4 text-center shrink-0">
         <h1 className="text-3xl font-display font-bold text-cream">AI Ayurvedic Assistant</h1>
         <p className="text-emerald-accent/60 text-sm">Ask me about your health, diet, or Ayurvedic remedies</p>
