@@ -62,3 +62,21 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-emerald-accent); 
 }
+
+/* Hide Google Translate UI elements */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}
+
+#google_translate_element {
+  display: none !important;
+}
+
+/* Hide tooltip from hover on translated text */
+.VIpgJd-ZVi9od-ORHb-OEVmcd {
+  display: none !important;
+}

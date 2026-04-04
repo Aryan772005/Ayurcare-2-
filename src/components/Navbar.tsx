@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Leaf, LogOut, Sun, Moon, Activity, Ribbon, Heart, Scale, Shield, Coffee, ShoppingBag } from 'lucide-react';
 import { auth, logout } from '../lib/firebase';
 import { User as FirebaseUser } from 'firebase/auth';
+import LanguageSwitcher from './LanguageSwitcher';
 
 interface NavbarProps {
   user: FirebaseUser | null;
@@ -74,6 +75,8 @@ export default function Navbar({ user }: NavbarProps) {
             </div>
             
             <div className="flex items-center gap-3 border-l border-white/10 pl-4 md:pl-6">
+              <LanguageSwitcher />
+              
               {/* Theme Toggle Button */}
               <button 
                 onClick={toggleTheme}
