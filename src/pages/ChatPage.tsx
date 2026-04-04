@@ -17,7 +17,7 @@ export default function ChatPage({ user }: { user: FirebaseUser | null }) {
   }, [messages]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
+    const files = Array.from(e.target.files || []) as File[];
     const newAttachments = files.map(file => {
       const isImage = file.type.startsWith('image/');
       return {

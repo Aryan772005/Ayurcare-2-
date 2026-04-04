@@ -12,6 +12,13 @@
   --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
 }
 
+.light-mode {
+  --color-forest: #F8FAFC; /* Cool Slate 50 background */
+  --color-moss: #E2E8F0; /* Slate 200 for cards/glass */
+  --color-cream: #0F172A; /* Slate 900 for dark text */
+  --color-emerald-accent: #059669; /* Darker Emerald 600 for contrast against light bg */
+}
+
 /* Base styles */
 body {
   margin: 0;
