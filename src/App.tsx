@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
-import { auth, loginWithGoogle } from './lib/firebase';
+import { auth } from './lib/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from './lib/firebase';
 import { Leaf } from 'lucide-react';
@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 // Components & Pages
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import AuthModal from './components/AuthModal';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import DoctorsPage from './pages/DoctorsPage';
@@ -20,6 +21,7 @@ import ChatPage from './pages/ChatPage';
 export default function App() {
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showAuth, setShowAuth] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (u) => {
@@ -42,15 +44,6 @@ export default function App() {
     return unsubscribe;
   }, []);
 
-  const handleLogin = async () => {
-    try {
-      await loginWithGoogle();
-    } catch (error: any) {
-      console.error("Login failed:", error);
-      alert(`Login failed: ${error.message || error}`);
-    }
-  };
-
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center bg-forest text-cream">
@@ -64,8 +57,15 @@ export default function App() {
   // Protected Route Wrapper
   const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     if (!user) {
-      alert("Please login first to access this page.");
-      return <Navigate to="/" replace />;
+      return (
+        <div className="min-h-screen pt-40 text-center px-6">
+          <h2 className="text-3xl font-display font-bold text-cream mb-4">Login Required</h2>
+          <p className="text-emerald-accent/60 mb-8">Please sign in to access this page.</p>
+          <button onClick={() => setShowAuth(true)} className="bg-emerald-accent text-forest px-8 py-3 rounded-full font-bold hover:bg-emerald-accent/90 transition-colors">
+            Sign In
+          </button>
+        </div>
+      );
     }
     return <>{children}</>;
   };
@@ -77,7 +77,7 @@ export default function App() {
         
         <main className="flex-1">
           <Routes>
-            <Route path="/" element={<HomePage onLogin={handleLogin} user={user} />} />
+            <Route path="/" element={<HomePage onLogin={() => setShowAuth(true)} user={user} />} />
             <Route path="/doctors" element={<DoctorsPage user={user} />} />
             <Route path="/guides" element={<GuidesPage />} />
             <Route path="/tools" element={<ToolsPage user={user} />} />
@@ -98,6 +98,9 @@ export default function App() {
         </main>
         
         <Footer />
+
+        {/* Auth Modal */}
+        {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
       </div>
     </BrowserRouter>
   );
