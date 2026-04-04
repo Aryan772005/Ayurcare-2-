@@ -6,6 +6,8 @@ import {
   User, 
   LogOut, 
   ChevronRight, 
+  ChevronLeft,
+  Menu,
   Activity, 
   ShieldCheck,
   Leaf,
@@ -54,6 +56,7 @@ export default function App() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [bookingMessage, setBookingMessage] = useState('');
   const [aiSaveMessage, setAiSaveMessage] = useState('');
+  const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
 
   useEffect(() => {
     try {
@@ -222,35 +225,50 @@ export default function App() {
   return (
     <div className="min-h-screen bg-forest flex flex-col md:flex-row text-cream">
       {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-moss/40 border-r border-white/5 p-6 flex flex-col">
-        <div className="flex items-center gap-2 mb-12">
-          <div className="bg-emerald-accent p-2 rounded-xl">
+      <aside className={`w-full ${isSidebarMinimized ? 'md:w-24' : 'md:w-64'} transition-all duration-300 bg-moss/40 border-r border-white/5 p-6 flex flex-col relative`}>
+        <button 
+          onClick={() => setIsSidebarMinimized(!isSidebarMinimized)}
+          className="absolute -right-4 top-8 bg-emerald-accent text-forest p-1 rounded-full shadow-lg hidden md:block hover:scale-110 transition-transform z-10"
+        >
+          {isSidebarMinimized ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+        </button>
+
+        <div className={`flex items-center ${isSidebarMinimized ? 'justify-center' : 'gap-2'} mb-12`}>
+          <div className="bg-emerald-accent p-2 rounded-xl shrink-0">
             <Leaf className="text-forest w-6 h-6" />
           </div>
-          <h1 className="text-2xl font-display font-bold text-gradient">Ayurcare+</h1>
+          {!isSidebarMinimized && <h1 className="text-2xl font-display font-bold text-gradient">Ayurcare+</h1>}
         </div>
 
         <nav className="flex-1 space-y-2">
-          <NavItem active={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} icon={<Activity size={20} />} label="Dashboard" />
-          <NavItem active={activeTab === 'ai'} onClick={() => setActiveTab('ai')} icon={<Sparkles size={20} />} label="AI Assistant" />
-          <NavItem active={activeTab === 'heart'} onClick={() => setActiveTab('heart')} icon={<Heart size={20} />} label="Heart Logs" />
-          <NavItem active={activeTab === 'appointments'} onClick={() => setActiveTab('appointments')} icon={<Calendar size={20} />} label="Appointments" />
+          <NavItem isMinimized={isSidebarMinimized} active={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} icon={<Activity size={20} />} label="Dashboard" />
+          <NavItem isMinimized={isSidebarMinimized} active={activeTab === 'ai'} onClick={() => setActiveTab('ai')} icon={<Sparkles size={20} />} label="AI Assistant" />
+          <NavItem isMinimized={isSidebarMinimized} active={activeTab === 'heart'} onClick={() => setActiveTab('heart')} icon={<Heart size={20} />} label="Heart Logs" />
+          <NavItem isMinimized={isSidebarMinimized} active={activeTab === 'appointments'} onClick={() => setActiveTab('appointments')} icon={<Calendar size={20} />} label="Appointments" />
         </nav>
 
         <div className="pt-6 border-t border-white/5">
-          <div className="flex items-center gap-3 mb-4">
-            <img src={user.photoURL || ''} alt="" className="w-10 h-10 rounded-full border-2 border-emerald-accent/20" referrerPolicy="no-referrer" />
-            <div className="overflow-hidden">
-              <p className="text-sm font-medium text-cream truncate">{user.displayName}</p>
-              <p className="text-xs text-emerald-accent/60 truncate">{user.email}</p>
-            </div>
+          <div className={`flex items-center ${isSidebarMinimized ? 'justify-center' : 'gap-3'} mb-4`}>
+            <img src={user.photoURL || ''} alt="" className="w-10 h-10 rounded-full border-2 border-emerald-accent/20 shrink-0" referrerPolicy="no-referrer" />
+            {!isSidebarMinimized && (
+              <div className="overflow-hidden">
+                <p className="text-sm font-medium text-cream truncate">{user.displayName}</p>
+                <p className="text-xs text-emerald-accent/60 truncate">{user.email}</p>
+              </div>
+            )}
           </div>
           <button 
             onClick={logout}
-            className="w-full flex items-center gap-2 text-emerald-accent/60 hover:text-rose-400 transition-colors text-sm font-medium"
+            title={isSidebarMinimized ? "Sign Out" : undefined}
+            className={`w-full flex items-center ${isSidebarMinimized ? 'justify-center' : 'gap-2'} text-emerald-accent/60 hover:text-rose-400 transition-colors text-sm font-medium mb-4`}
           >
-            <LogOut size={18} /> Sign Out
+            <LogOut size={18} /> {!isSidebarMinimized && "Sign Out"}
           </button>
+          {!isSidebarMinimized && (
+            <div className="text-xs text-emerald-accent/40 text-center mt-4">
+              &copy; {new Date().getFullYear()} Ayurcare+
+            </div>
+          )}
         </div>
       </aside>
 
@@ -626,17 +644,18 @@ function LandingPage({ onLogin }: { onLogin: () => void }) {
   );
 }
 
-function NavItem({ active, onClick, icon, label }: { active: boolean, onClick: () => void, icon: React.ReactNode, label: string }) {
+function NavItem({ active, onClick, icon, label, isMinimized }: { active: boolean, onClick: () => void, icon: React.ReactNode, label: string, isMinimized?: boolean }) {
   return (
     <button 
       onClick={onClick}
-      className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all font-medium ${
+      title={isMinimized ? label : undefined}
+      className={`w-full flex items-center ${isMinimized ? 'justify-center' : 'gap-3'} px-4 py-3 rounded-2xl transition-all font-medium ${
         active 
           ? 'bg-emerald-accent/10 text-emerald-accent shadow-sm border border-emerald-accent/10' 
           : 'text-emerald-accent/40 hover:text-emerald-accent/60 hover:bg-white/5'
       }`}
     >
-      {icon} {label}
+      {icon} {!isMinimized && label}
     </button>
   );
 }
