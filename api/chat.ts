@@ -1,11 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 
-const NVIDIA_API_KEY = process.env.NVIDIA_API_KEY;
-
-if (!NVIDIA_API_KEY) {
-  console.warn("NVIDIA_API_KEY is not set in environment variables");
-}
-
 export default async function handler(req: any, res: any) {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,6 +12,14 @@ export default async function handler(req: any, res: any) {
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Read API key inside handler to ensure Vercel always picks up the env var
+  const apiKey = (process.env.NVIDIA_API_KEY || '').trim();
+
+  if (!apiKey) {
+    console.error("NVIDIA_API_KEY is not set in environment variables");
+    return res.status(500).json({ error: "Server configuration error: API key not set" });
   }
 
   const { message } = req.body;
@@ -36,7 +38,7 @@ Respond in a friendly, informative way. Use bullet points for lists.`;
     const response = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${NVIDIA_API_KEY}`,
+        "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -66,3 +68,4 @@ Respond in a friendly, informative way. Use bullet points for lists.`;
     return res.status(500).json({ error: error.message || "Internal server error" });
   }
 }
+
