@@ -30,6 +30,37 @@ app.use("/api/appointments", appointmentRoutes);
 app.use("/api/heart-rate", heartRateRoutes);
 app.use("/api/analyze-symptoms", aiRoutes);
 
+// Chat route for local development (mirrors api/chat.ts on Vercel)
+app.post("/api/chat", async (req, res) => {
+  const { message } = req.body;
+  if (!message) return res.status(400).json({ error: "Missing message" });
+
+  let apiKey = process.env.NVIDIA_API_KEY;
+  if (!apiKey) return res.status(500).json({ error: "NVIDIA_API_KEY not set" });
+  if (apiKey.startsWith('Bearer ')) apiKey = apiKey.substring(7);
+
+  try {
+    const { default: axios } = await import("axios");
+    const response = await axios.post("https://integrate.api.nvidia.com/v1/chat/completions", {
+      model: "meta/llama-3.1-8b-instruct",
+      messages: [
+        { role: "system", content: "You are a knowledgeable and compassionate Ayurvedic health assistant. Provide helpful advice based on Ayurvedic principles." },
+        { role: "user", content: message }
+      ],
+      temperature: 0.4,
+      top_p: 0.8,
+      max_tokens: 1024,
+    }, {
+      headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" }
+    });
+    const aiText = response.data.choices?.[0]?.message?.content || "No response";
+    res.json({ reply: aiText });
+  } catch (error: any) {
+    console.error("Chat error:", error.response?.data || error.message);
+    res.status(500).json({ error: error.response?.data?.detail || error.message });
+  }
+});
+
 // Export the app for Vercel serverless functions
 export default app;
 

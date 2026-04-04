@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Sparkles, User as UserIcon } from 'lucide-react';
 import { User as FirebaseUser } from 'firebase/auth';
 
-const NVIDIA_API_KEY = "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";
-
 export default function ChatPage({ user }: { user: FirebaseUser | null }) {
   const [messages, setMessages] = useState<{role: 'user'|'assistant', content: string}[]>([
     { role: 'assistant', content: "Namaste 🙏 I am your Ayurvedic AI assistant. Describe your symptoms, diet, or health concerns, and I will provide natural holistic insights." }
@@ -25,37 +23,19 @@ export default function ChatPage({ user }: { user: FirebaseUser | null }) {
     setIsLoading(true);
 
     try {
-      const prompt = `As an Ayurvedic health assistant for Ayurcare+, analyze the following query and provide a helpful, detailed response. If the user describes symptoms, suggest possible Ayurvedic conditions, remedies, herbs, diet changes, and precautions. If the user asks about diet, yoga, or lifestyle, give Ayurvedic recommendations. Always be compassionate and professional.
-
-User query: ${userMessage}
-
-Respond in a friendly, informative way. Use bullet points for lists. Do NOT respond in JSON format - respond in natural, readable text.`;
-
-      const response = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${NVIDIA_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "meta/llama-3.1-8b-instruct",
-          messages: [
-            { role: "system", content: "You are a knowledgeable and compassionate Ayurvedic health assistant. Provide helpful advice based on Ayurvedic principles including dosha balancing, herbal remedies, yoga, pranayama, and diet recommendations. Always recommend consulting a qualified Ayurvedic doctor for serious conditions." },
-            { role: "user", content: prompt }
-          ],
-          temperature: 0.4,
-          top_p: 0.8,
-          max_tokens: 1024,
-        })
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage })
       });
 
-      if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(`NVIDIA API error (${response.status}): ${errText}`);
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+        throw new Error(errData.error || errData.details || `Server error ${res.status}`);
       }
 
-      const data = await response.json();
-      const aiText = data.choices?.[0]?.message?.content || "I couldn't generate a response. Please try again.";
+      const data = await res.json();
+      const aiText = data.reply || "I couldn't generate a response. Please try again.";
 
       setMessages(prev => [...prev, { role: 'assistant', content: aiText }]);
     } catch (err) {
