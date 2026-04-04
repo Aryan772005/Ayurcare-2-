@@ -14,24 +14,27 @@ import aiRoutes from "./src/routes/aiRoutes";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const app = express();
+const PORT = 3000;
+
+app.use(cors());
+app.use(express.json());
+
+// API Routes
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok", message: "Ayurcare+ Backend is running" });
+});
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/appointments", appointmentRoutes);
+app.use("/api/heart-rate", heartRateRoutes);
+app.use("/api/analyze-symptoms", aiRoutes);
+
+// Export the app for Vercel serverless functions
+export default app;
+
 async function startServer() {
   try {
-    const app = express();
-    const PORT = 3000;
-
-    app.use(cors());
-    app.use(express.json());
-
-    // API Routes
-    app.get("/api/health", (req, res) => {
-      res.json({ status: "ok", message: "Ayurcare+ Backend is running" });
-    });
-    app.use("/api/auth", authRoutes);
-    app.use("/api/user", userRoutes);
-    app.use("/api/appointments", appointmentRoutes);
-    app.use("/api/heart-rate", heartRateRoutes);
-    app.use("/api/analyze-symptoms", aiRoutes);
-
     // Vite middleware for development
     if (process.env.NODE_ENV !== "production") {
       console.log("Starting Vite in development mode...");
@@ -71,4 +74,7 @@ async function startServer() {
   }
 }
 
-startServer();
+// Only start the server if not running on Vercel
+if (!process.env.VERCEL) {
+  startServer();
+}

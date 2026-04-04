@@ -89,7 +89,13 @@ export default function App() {
   const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
     try {
       const token = await user?.getIdToken();
-      const res = await fetch(url, {
+      
+      // Ensure we use the full URL if we are in production (Vercel)
+      // Vercel serverless functions are mapped to /api/*
+      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const fullUrl = url.startsWith('http') ? url : `${baseUrl}${url}`;
+
+      const res = await fetch(fullUrl, {
         ...options,
         headers: {
           ...options.headers,
@@ -99,7 +105,7 @@ export default function App() {
       });
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || `HTTP error! status: ${res.status}`);
+        throw new Error(errorData.error || errorData.message || `HTTP error! status: ${res.status}`);
       }
       return res;
     } catch (err) {
@@ -118,9 +124,9 @@ export default function App() {
       });
       const data = await res.json();
       setAiResult(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error("AI Analysis failed:", err);
-      alert("AI analysis failed. Please check if NVIDIA_API_KEY is correctly set in the backend.");
+      alert(`AI Analysis failed: ${err.message || "Server error"}. Please check your Vercel Runtime Logs for the exact cause.`);
     } finally {
       setAiLoading(false);
     }
