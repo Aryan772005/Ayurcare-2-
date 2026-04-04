@@ -22,6 +22,7 @@ import ChatPage from './pages/ChatPage';
 import TopicPage from './pages/TopicPage';
 import ShopPage from './pages/ShopPage';
 import DiagnosisPage from './pages/DiagnosisPage';
+import HealthCoachPage from './pages/HealthCoachPage';
 
 export default function App() {
   const [user, setUser] = useState<FirebaseUser | null>(null);
@@ -94,6 +95,11 @@ export default function App() {
             <Route path="/dashboard" element={
               <ProtectedRoute>
                 <DashboardPage user={user!} />
+              </ProtectedRoute>
+            } />
+            <Route path="/health-coach" element={
+              <ProtectedRoute>
+                <HealthCoachPage user={user} />
               </ProtectedRoute>
             } />
             <Route path="/chat" element={
