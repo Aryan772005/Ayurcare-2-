@@ -97,21 +97,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const data = await response.json();
-    let output = data.choices?.[0]?.message?.content;
+    let output = data.choices?.[0]?.message?.content || '';
 
-    // Remove markdown codeblock around JSON if present
-    if (output) {
-      output = output.replace(/^\`\`\`json\s*/i, '').replace(/\`\`\`\s*$/, '').trim();
+    // Regex-based JSON extraction (finds the first { and last })
+    let jsonText = output.trim();
+    const jsonMatch = output.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      jsonText = jsonMatch[0];
     }
 
     // JSON Safe Parse
     let parsed;
     try {
-      parsed = JSON.parse(output);
+      parsed = JSON.parse(jsonText);
     } catch {
       return res.status(500).json({
         error: 'AI response parsing failed',
-        raw: output,
+        raw: output, // Return full output for debugging
       });
     }
 

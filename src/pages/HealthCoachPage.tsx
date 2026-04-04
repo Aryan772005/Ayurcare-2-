@@ -74,7 +74,11 @@ export default function HealthCoachPage({ user }: { user: FirebaseUser | null })
       if (res.ok) {
         setReport(data);
       } else {
-        setReport({ error: `Error connecting to AI Neural Core: ${data.error || 'Unknown error'}` });
+        let errorMsg = data.error || 'Unknown error';
+        if (data.error === 'AI response parsing failed' && data.raw) {
+          errorMsg += `: ${data.raw.substring(0, 300)}...`;
+        }
+        setReport({ error: `Error connecting to AI Neural Core: ${errorMsg}` });
       }
     } catch (err: any) {
       setReport({ error: `Neural network analysis failed: ${err.message}` });
