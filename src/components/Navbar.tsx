@@ -70,16 +70,11 @@ export default function Navbar({ user, onLogin }: NavbarProps) {
   }, [showPanel]);
 
   useEffect(() => {
-    const savedMode = localStorage.getItem('theme');
-    // Default to dark mode unless 'light' was explicitly saved
-    if (savedMode === 'light') {
-      setIsLightMode(true);
-      document.body.classList.add('light-mode');
-    } else {
-      setIsLightMode(false);
-      document.body.classList.remove('light-mode');
-      if (!savedMode) localStorage.setItem('theme', 'dark');
-    }
+    // Force Dark Mode on initial load always, ignoring past saves
+    // This ensures "new or old" users ALWAYS see dark mode by default
+    setIsLightMode(false);
+    document.body.classList.remove('light-mode');
+    localStorage.setItem('theme', 'dark');
   }, []);
 
   const toggleTheme = () => {
