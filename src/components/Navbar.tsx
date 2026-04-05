@@ -101,7 +101,7 @@ export default function Navbar({ user, onLogin }: NavbarProps) {
     <>
       {/* ── Main Navbar ── */}
       <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'py-3 bg-forest/90 backdrop-blur-xl border-b border-white/5 shadow-xl shadow-black/10' : 'py-5 bg-transparent'}`}>
-        <div className="max-w-[1440px] mx-auto px-6 xl:px-10">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 xl:px-10">
           <div className="flex items-center gap-4">
 
             {/* LEFT: Hamburger + Logo — shrink-0 so it never gets squished */}
@@ -135,7 +135,7 @@ export default function Navbar({ user, onLogin }: NavbarProps) {
                 <div className="bg-emerald-accent p-2 rounded-xl group-hover:scale-110 transition-transform shadow-lg shadow-emerald-accent/20">
                   <Leaf className="text-forest w-5 h-5" />
                 </div>
-                <span className="text-xl font-display font-bold text-gradient hidden md:block">AyurCare+</span>
+                <span className="text-xl font-display font-bold text-gradient hidden sm:block">AyurCare+</span>
               </Link>
             </div>
 
@@ -200,7 +200,7 @@ export default function Navbar({ user, onLogin }: NavbarProps) {
               ) : (
                 <button
                   onClick={onLogin}
-                  className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-accent text-forest text-[13px] font-bold hover:bg-emerald-accent/90 transition-all shadow-lg shadow-emerald-accent/15"
+                  className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-emerald-accent text-forest text-[12px] sm:text-[13px] font-bold hover:bg-emerald-accent/90 transition-all shadow-lg shadow-emerald-accent/15"
                 >
                   Sign In <Zap size={12} />
                 </button>
