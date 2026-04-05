@@ -214,7 +214,7 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
   }
 
   return (
-    <div className="min-h-screen pb-20 px-4 md:px-6 max-w-[1440px] mx-auto">
+    <div className="min-h-screen pt-24 pb-20 px-4 md:px-6 max-w-[1440px] mx-auto">
 
       {/* Header */}
       <motion.div {...fadeUp()} className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 mt-6 gap-4">

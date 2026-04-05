@@ -90,7 +90,7 @@ export default function HealthCoachPage({ user }: { user: FirebaseUser | null })
   return (
     <motion.div 
       initial="hidden" animate="visible" variants={containerVariants}
-      className="min-h-screen pb-20 relative overflow-hidden"
+      className="min-h-screen pt-24 pb-20 relative overflow-hidden"
     >
       {/* Background elements */}
       <div className="absolute top-[10%] right-[10%] w-[400px] h-[400px] rounded-full filter blur-[120px] opacity-[0.05] pointer-events-none bg-emerald-accent" />
