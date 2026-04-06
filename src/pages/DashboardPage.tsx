@@ -214,46 +214,46 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
   }
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4 md:px-6 max-w-[1440px] mx-auto">
+    <div className="min-h-screen pt-20 pb-10 md:pt-24 md:pb-20 px-4 md:px-6 max-w-[1440px] mx-auto">
 
       {/* Header */}
-      <motion.div {...fadeUp()} className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 mt-6 gap-4">
+      <motion.div {...fadeUp()} className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-8 mt-4 md:mt-6 gap-3 md:gap-4">
         <div>
-          <h1 className="text-4xl font-display font-bold text-cream tracking-tight">
+          <h1 className="text-2xl md:text-4xl font-display font-bold text-cream tracking-tight">
             Welcome, <span className="text-gradient">{firstName}</span>
           </h1>
-          <p className="text-emerald-accent/50 text-sm mt-1 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-accent animate-pulse" />
+          <p className="text-emerald-accent/50 text-[10px] md:text-sm mt-1 flex items-center gap-1.5 md:gap-2">
+            <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-accent animate-pulse" />
             {invoices.length > 0
               ? `${invoices.length} Record${invoices.length !== 1 ? 's' : ''} found — Live Firestore Sync`
               : 'No activity yet — Book a consultation to get started'}
           </p>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="px-4 py-2 rounded-xl bg-forest/40 border border-white/5 text-[11px] font-bold text-cream/60 backdrop-blur-md flex items-center gap-2 uppercase tracking-widest">
-            <Clock size={14} className="text-emerald-accent" />
+        <div className="flex items-center gap-2 md:gap-3">
+          <div className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl bg-forest/40 border border-white/5 text-[9px] md:text-[11px] font-bold text-cream/60 backdrop-blur-md flex items-center gap-1.5 md:gap-2 uppercase tracking-widest">
+            <Clock size={12} className="md:w-[14px] md:h-[14px] text-emerald-accent" />
             {new Date().toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' })}
           </div>
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-accent/20 to-emerald-accent/5 border border-emerald-accent/20 flex items-center justify-center overflow-hidden shadow-xl shadow-emerald-accent/5">
-            {user.photoURL ? <img src={user.photoURL} alt="" className="w-full h-full object-cover" /> : <Activity size={20} className="text-emerald-accent" />}
+          <div className="w-9 h-9 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-gradient-to-br from-emerald-accent/20 to-emerald-accent/5 border border-emerald-accent/20 flex items-center justify-center overflow-hidden shadow-xl shadow-emerald-accent/5">
+            {user.photoURL ? <img src={user.photoURL} alt="" className="w-full h-full object-cover" /> : <Activity size={16} className="md:w-[20px] md:h-[20px] text-emerald-accent" />}
           </div>
         </div>
       </motion.div>
 
       {/* Tab Bar */}
-      <motion.div {...fadeUp(0.05)} className="flex flex-nowrap gap-1 mb-6 sm:mb-8 p-1 rounded-2xl bg-forest/60 border border-white/5 backdrop-blur-md w-full sm:w-fit overflow-x-auto scrollbar-hide">
+      <motion.div {...fadeUp(0.05)} className="flex flex-nowrap gap-0.5 md:gap-1 mb-4 sm:mb-8 p-0.5 md:p-1 rounded-[14px] md:rounded-2xl bg-forest/60 border border-white/5 backdrop-blur-md w-full sm:w-fit overflow-x-auto scrollbar-hide">
         {TABS.map(t => (
           <button
             key={t.id}
             id={`tab-${t.id}`}
             onClick={() => { setTab(t.id); setPreviewInvoice(null); }}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${
+            className={`flex items-center gap-1.5 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 rounded-xl text-[10px] md:text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap ${
               tab === t.id ? 'bg-emerald-accent text-forest shadow-lg shadow-emerald-accent/20' : 'text-cream/40 hover:text-cream/70'
             }`}
           >
             {t.icon}{t.label}
             {t.id === 'invoices' && invoices.length > 0 && (
-              <span className="ml-1 w-5 h-5 rounded-full bg-emerald-accent/20 text-emerald-accent text-[10px] font-bold flex items-center justify-center">
+              <span className="ml-1 w-4 h-4 md:w-5 md:h-5 rounded-full bg-emerald-accent/20 text-emerald-accent text-[9px] md:text-[10px] font-bold flex items-center justify-center">
                 {invoices.length}
               </span>
             )}
@@ -298,32 +298,32 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
               </motion.div>
 
               {/* Heart Rate Trend */}
-              <motion.div {...fadeUp(0.1)} className="lg:col-span-4 glass-card p-6">
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(248,113,113,0.1)' }}>
-                    <Heart size={16} style={{ color: '#F87171' }} />
+              <motion.div {...fadeUp(0.1)} className="lg:col-span-4 glass-card p-4 md:p-6">
+                <div className="flex items-center gap-2 mb-4 md:mb-6">
+                  <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl flex items-center justify-center" style={{ background: 'rgba(248,113,113,0.1)' }}>
+                    <Heart size={14} className="md:w-[16px] md:h-[16px]" style={{ color: '#F87171' }} />
                   </div>
-                  <h3 className="text-sm font-bold text-cream uppercase tracking-widest">Heart Trend</h3>
+                  <h3 className="text-xs md:text-sm font-bold text-cream uppercase tracking-widest">Heart Trend</h3>
                 </div>
                 {heartLogs.length > 0 ? (
                   <>
-                    <div className="text-center mb-4">
-                      <p className="text-4xl font-bold text-cream">{heartRateVal}</p>
-                      <p className="text-xs text-cream/30 mt-1">BPM — Latest reading</p>
+                    <div className="text-center mb-3 md:mb-4">
+                      <p className="text-3xl md:text-4xl font-bold text-cream">{heartRateVal}</p>
+                      <p className="text-[10px] md:text-xs text-cream/30 mt-1">BPM — Latest reading</p>
                     </div>
                     <MiniLineChart data={heartLogs.slice(0, 7).reverse().map(l => l.heartRate)} color="#F87171" height={80} />
-                    <div className="flex justify-between mt-4 pt-4 border-t border-white/5">
+                    <div className="flex justify-between mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/5">
                       <div className="text-center">
-                        <p className="text-[10px] text-cream/30">Avg</p>
-                        <p className="text-sm font-bold text-cream">{stats.avgHeartRate} BPM</p>
+                        <p className="text-[9px] md:text-[10px] text-cream/30">Avg</p>
+                        <p className="text-xs md:text-sm font-bold text-cream">{stats.avgHeartRate} BPM</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-[10px] text-cream/30">Readings</p>
-                        <p className="text-sm font-bold text-cream">{heartLogs.length}</p>
+                        <p className="text-[9px] md:text-[10px] text-cream/30">Readings</p>
+                        <p className="text-xs md:text-sm font-bold text-cream">{heartLogs.length}</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-[10px] text-cream/30">Status</p>
-                        <p className="text-sm font-bold text-emerald-accent">
+                        <p className="text-[9px] md:text-[10px] text-cream/30">Status</p>
+                        <p className="text-xs md:text-sm font-bold text-emerald-accent">
                           {stats.avgHeartRate && stats.avgHeartRate >= 60 && stats.avgHeartRate <= 100 ? 'Normal' : 'Monitor'}
                         </p>
                       </div>
@@ -331,7 +331,7 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
                   </>
                 ) : (
                   <EmptyState
-                    icon={<Heart size={24} />}
+                    icon={<Heart size={20} className="md:w-[24px] md:h-[24px]" />}
                     title="No Heart Data Yet"
                     sub="Record your heart rate using the health tools"
                     cta="Log Heart Rate"
@@ -342,58 +342,58 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
 
               {/* Stats Row */}
               {[
-                { label: 'Consultations', value: `${sessionCountVal}`, iconEl: <Stethoscope size={16} />, iconColor: '#60A5FA', bg: 'rgba(96,165,250,0.1)', desc: 'Total sessions', trend: stats.totalAppointments > 0 ? 'Paid & Verified' : 'Book one!', delay: 0.12 },
-                { label: 'Orders', value: `${orderCountVal}`, iconEl: <ShoppingBag size={16} />, iconColor: '#FBBF24', bg: 'rgba(245,158,11,0.1)', desc: 'Product orders', trend: stats.totalOrders > 0 ? `₹${stats.totalOrders * 100}+ est.` : 'Shop now', delay: 0.16 },
-                { label: 'Streak', value: `${streakVal}d`, iconEl: <Zap size={16} />, iconColor: '#34D399', bg: 'rgba(52,211,153,0.1)', desc: 'Active days', trend: streakVal > 0 ? '🔥 Keep going' : 'Start today', delay: 0.2 },
-                { label: 'Wellness', value: `${wellnessScore}%`, iconEl: <TrendingUp size={16} />, iconColor: '#A78BFA', bg: 'rgba(167,139,250,0.1)', desc: 'Score', trend: wellnessScore >= 80 ? '↑ Excellent' : '↑ Improving', delay: 0.24 },
+                { label: 'Consultations', value: `${sessionCountVal}`, iconEl: <Stethoscope size={14} className="md:w-[16px] md:h-[16px]" />, iconColor: '#60A5FA', bg: 'rgba(96,165,250,0.1)', desc: 'Total sessions', trend: stats.totalAppointments > 0 ? 'Paid & Verified' : 'Book one!', delay: 0.12 },
+                { label: 'Orders', value: `${orderCountVal}`, iconEl: <ShoppingBag size={14} className="md:w-[16px] md:h-[16px]" />, iconColor: '#FBBF24', bg: 'rgba(245,158,11,0.1)', desc: 'Product orders', trend: stats.totalOrders > 0 ? `₹${stats.totalOrders * 100}+ est.` : 'Shop now', delay: 0.16 },
+                { label: 'Streak', value: `${streakVal}d`, iconEl: <Zap size={14} className="md:w-[16px] md:h-[16px]" />, iconColor: '#34D399', bg: 'rgba(52,211,153,0.1)', desc: 'Active days', trend: streakVal > 0 ? '🔥 Keep going' : 'Start today', delay: 0.2 },
+                { label: 'Wellness', value: `${wellnessScore}%`, iconEl: <TrendingUp size={14} className="md:w-[16px] md:h-[16px]" />, iconColor: '#A78BFA', bg: 'rgba(167,139,250,0.1)', desc: 'Score', trend: wellnessScore >= 80 ? '↑ Excellent' : '↑ Improving', delay: 0.24 },
               ].map((c, i) => (
-                <motion.div key={i} {...fadeUp(c.delay)} className="lg:col-span-3 stat-widget">
+                <motion.div key={i} {...fadeUp(c.delay)} className="lg:col-span-3 stat-widget p-3 md:p-6">
                   <div className="flex items-center justify-between mb-2">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: c.bg }}>
+                    <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl flex items-center justify-center" style={{ background: c.bg }}>
                       <span style={{ color: c.iconColor }}>{c.iconEl}</span>
                     </div>
-                    <span className="text-[10px] uppercase tracking-widest text-cream/30">{c.label}</span>
+                    <span className="text-[9px] md:text-[10px] uppercase tracking-widest text-cream/30">{c.label}</span>
                   </div>
-                  <p className="text-2xl font-bold text-cream">{c.value}</p>
+                  <p className="text-xl md:text-2xl font-bold text-cream">{c.value}</p>
                   <div className="flex items-center justify-between mt-1">
-                    <p className="text-[10px] text-emerald-accent/40">{c.desc}</p>
-                    <span className="text-[10px] font-bold text-emerald-accent">{c.trend}</span>
+                    <p className="text-[9px] md:text-[10px] text-emerald-accent/40">{c.desc}</p>
+                    <span className="text-[9px] md:text-[10px] font-bold text-emerald-accent">{c.trend}</span>
                   </div>
                 </motion.div>
               ))}
 
               {/* Dosha Radar */}
-              <motion.div {...fadeUp(0.2)} className="lg:col-span-4 glass-card p-6">
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(245,158,11,0.1)' }}>
-                    <Brain size={16} style={{ color: '#FBBF24' }} />
+              <motion.div {...fadeUp(0.2)} className="lg:col-span-4 glass-card p-4 md:p-6">
+                <div className="flex items-center gap-2 mb-4 md:mb-6">
+                  <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl flex items-center justify-center" style={{ background: 'rgba(245,158,11,0.1)' }}>
+                    <Brain size={14} className="md:w-[16px] md:h-[16px]" style={{ color: '#FBBF24' }} />
                   </div>
-                  <h3 className="text-sm font-bold text-cream uppercase tracking-widest">Prakriti Hub</h3>
+                  <h3 className="text-xs md:text-sm font-bold text-cream uppercase tracking-widest">Prakriti Hub</h3>
                 </div>
                 <div className="flex justify-center -mt-4">
                   <RadarChart vata={45} pitta={72} kapha={32} />
                 </div>
                 <div className="space-y-2 mt-4">
-                  <p className="text-[10px] font-bold text-amber-400/80 uppercase tracking-widest mb-3">AI Suggestions</p>
-                  <div className="p-3 rounded-xl bg-forest/40 border border-white/5 flex items-center gap-3">
-                    <span className="text-xl">🌿</span>
-                    <span className="text-xs text-cream/70">Warm Tulsi Tea for Pitta balance.</span>
+                  <p className="text-[9px] md:text-[10px] font-bold text-amber-400/80 uppercase tracking-widest mb-2 md:mb-3">AI Suggestions</p>
+                  <div className="p-2 md:p-3 rounded-lg md:rounded-xl bg-forest/40 border border-white/5 flex items-center gap-2 md:gap-3">
+                    <span className="text-lg md:text-xl">🌿</span>
+                    <span className="text-[11px] md:text-xs text-cream/70">Warm Tulsi Tea for Pitta balance.</span>
                   </div>
-                  <div className="p-3 rounded-xl bg-forest/40 border border-white/5 flex items-center gap-3">
-                    <span className="text-xl">🫚</span>
-                    <span className="text-xs text-cream/70">Morning ginger for Vata grounding.</span>
+                  <div className="p-2 md:p-3 rounded-lg md:rounded-xl bg-forest/40 border border-white/5 flex items-center gap-2 md:gap-3">
+                    <span className="text-lg md:text-xl">🫚</span>
+                    <span className="text-[11px] md:text-xs text-cream/70">Morning ginger for Vata grounding.</span>
                   </div>
                 </div>
               </motion.div>
 
               {/* Recent Activity */}
-              <motion.div {...fadeUp(0.25)} className="lg:col-span-8 glass-card p-6">
-                <div className="flex items-center justify-between mb-6">
+              <motion.div {...fadeUp(0.25)} className="lg:col-span-8 glass-card p-4 md:p-6">
+                <div className="flex items-center justify-between mb-4 md:mb-6">
                   <div className="flex items-center gap-2">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(167,139,250,0.1)' }}>
-                      <Activity size={16} style={{ color: '#A78BFA' }} />
+                    <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl flex items-center justify-center" style={{ background: 'rgba(167,139,250,0.1)' }}>
+                      <Activity size={14} className="md:w-[16px] md:h-[16px]" style={{ color: '#A78BFA' }} />
                     </div>
-                    <h3 className="text-sm font-bold text-cream uppercase tracking-widest">Recent Activity</h3>
+                    <h3 className="text-xs md:text-sm font-bold text-cream uppercase tracking-widest">Recent Activity</h3>
                   </div>
                   {invoices.length > 0 && (
                     <button
@@ -405,29 +405,29 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
                   )}
                 </div>
                 {invoices.length > 0 ? (
-                  <div className="space-y-3">
+                  <div className="space-y-2 md:space-y-3">
                     {invoices.slice(0, 5).map((inv, i) => (
                       <motion.div
                         key={inv.id}
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.05 }}
-                        className="flex items-center justify-between p-3 rounded-xl bg-forest/30 border border-white/5 hover:bg-white/[0.02] transition-colors"
+                        className="flex items-center justify-between p-2 md:p-3 rounded-lg md:rounded-xl bg-forest/30 border border-white/5 hover:bg-white/[0.02] transition-colors"
                       >
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: inv.type === 'consultation' ? 'rgba(96,165,250,0.1)' : 'rgba(245,158,11,0.1)' }}>
+                        <div className="flex items-center gap-2 md:gap-3">
+                          <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: inv.type === 'consultation' ? 'rgba(96,165,250,0.1)' : 'rgba(245,158,11,0.1)' }}>
                             {inv.type === 'consultation'
-                              ? <Stethoscope size={13} style={{ color: '#60A5FA' }} />
-                              : <ShoppingBag size={13} style={{ color: '#FBBF24' }} />}
+                              ? <Stethoscope size={11} className="md:w-[13px] md:h-[13px]" style={{ color: '#60A5FA' }} />
+                              : <ShoppingBag size={11} className="md:w-[13px] md:h-[13px]" style={{ color: '#FBBF24' }} />}
                           </div>
                           <div>
-                            <p className="text-xs font-medium text-cream">{inv.service}</p>
-                            <p className="text-[10px] text-cream/30">{new Date(inv.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                            <p className="text-[11px] md:text-xs font-medium text-cream">{inv.service}</p>
+                            <p className="text-[9px] md:text-[10px] text-cream/30">{new Date(inv.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="text-sm font-bold text-cream">₹{inv.amount.toLocaleString()}</p>
-                          <span className={`text-[9px] font-bold uppercase ${inv.status === 'paid' ? 'text-emerald-accent' : 'text-amber-400'}`}>
+                          <p className="text-xs md:text-sm font-bold text-cream">₹{inv.amount.toLocaleString()}</p>
+                          <span className={`text-[8px] md:text-[9px] font-bold uppercase ${inv.status === 'paid' ? 'text-emerald-accent' : 'text-amber-400'}`}>
                             {inv.status}
                           </span>
                         </div>
@@ -445,19 +445,19 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
                 )}
                 <button
                   onClick={() => navigate('/health-coach')}
-                  className="w-full mt-6 py-4 rounded-xl bg-forest/40 border border-white/5 text-emerald-accent text-xs font-bold uppercase tracking-widest hover:bg-emerald-accent/10 transition-all flex items-center justify-center gap-2 group"
+                  className="w-full mt-4 md:mt-6 py-3 md:py-4 rounded-xl bg-forest/40 border border-white/5 text-emerald-accent text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-emerald-accent/10 transition-all flex items-center justify-center gap-1.5 md:gap-2 group"
                 >
-                  Launch AI Health Blueprint <Sparkles size={14} className="group-hover:animate-spin" />
+                  Launch AI Health Blueprint <Sparkles size={12} className="md:w-[14px] md:h-[14px] group-hover:animate-spin" />
                 </button>
               </motion.div>
 
               {/* Anomaly Scan */}
-              <motion.div {...fadeUp(0.3)} className={`lg:col-span-6 glass-card p-6 ${anomalyState === 'alert' ? 'anomaly-card alert' : 'anomaly-card stable'}`}>
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: anomalyState === 'alert' ? 'rgba(239,68,68,0.1)' : 'rgba(16,185,129,0.1)' }}>
-                    {anomalyState === 'alert' ? <AlertTriangle size={16} className="text-red-400" /> : <Shield size={16} className="text-emerald-accent" />}
+              <motion.div {...fadeUp(0.3)} className={`lg:col-span-6 glass-card p-4 md:p-6 ${anomalyState === 'alert' ? 'anomaly-card alert' : 'anomaly-card stable'}`}>
+                <div className="flex items-center gap-2 mb-4 md:mb-6">
+                  <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl flex items-center justify-center" style={{ background: anomalyState === 'alert' ? 'rgba(239,68,68,0.1)' : 'rgba(16,185,129,0.1)' }}>
+                    {anomalyState === 'alert' ? <AlertTriangle size={14} className="md:w-[16px] md:h-[16px] text-red-400" /> : <Shield size={14} className="md:w-[16px] md:h-[16px] text-emerald-accent" />}
                   </div>
-                  <h3 className="text-sm font-bold text-cream uppercase tracking-widest">Neural Scan</h3>
+                  <h3 className="text-xs md:text-sm font-bold text-cream uppercase tracking-widest">Neural Scan</h3>
                 </div>
                 <AnimatePresence mode="wait">
                   <motion.div key={anomalyState} initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.97 }} className="text-center py-6">
@@ -479,12 +479,12 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
               </motion.div>
 
               {/* Spend Summary */}
-              <motion.div {...fadeUp(0.35)} className="lg:col-span-6 glass-card p-6">
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(16,185,129,0.1)' }}>
-                    <IndianRupee size={16} className="text-emerald-accent" />
+              <motion.div {...fadeUp(0.35)} className="lg:col-span-6 glass-card p-4 md:p-6">
+                <div className="flex items-center gap-2 mb-4 md:mb-6">
+                  <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl flex items-center justify-center" style={{ background: 'rgba(16,185,129,0.1)' }}>
+                    <IndianRupee size={14} className="md:w-[16px] md:h-[16px] text-emerald-accent" />
                   </div>
-                  <h3 className="text-sm font-bold text-cream uppercase tracking-widest">Spend Overview</h3>
+                  <h3 className="text-xs md:text-sm font-bold text-cream uppercase tracking-widest">Spend Overview</h3>
                 </div>
                 {stats.totalSpend > 0 ? (
                   <>
@@ -546,15 +546,15 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
               ))}
 
               {/* Monthly Spend Bar Chart */}
-              <motion.div {...fadeUp(0.1)} className="lg:col-span-7 glass-card p-6">
-                <div className="flex items-center justify-between mb-6">
+              <motion.div {...fadeUp(0.1)} className="lg:col-span-7 glass-card p-4 md:p-6">
+                <div className="flex items-center justify-between mb-4 md:mb-6">
                   <div className="flex items-center gap-2">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(16,185,129,0.1)' }}>
-                      <BarChart2 size={16} className="text-emerald-accent" />
+                    <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl flex items-center justify-center" style={{ background: 'rgba(16,185,129,0.1)' }}>
+                      <BarChart2 size={14} className="md:w-[16px] md:h-[16px] text-emerald-accent" />
                     </div>
-                    <h3 className="text-sm font-bold text-cream uppercase tracking-widest">Monthly Spend</h3>
+                    <h3 className="text-xs md:text-sm font-bold text-cream uppercase tracking-widest">Monthly Spend</h3>
                   </div>
-                  <span className="smart-tag green text-[9px]">Real data</span>
+                  <span className="smart-tag green text-[8px] md:text-[9px]">Real data</span>
                 </div>
                 {stats.totalSpend > 0 ? (
                   <BarChart data={barData} height={180} unit="₹" />
@@ -564,12 +564,12 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
               </motion.div>
 
               {/* Spend Breakdown Donut */}
-              <motion.div {...fadeUp(0.15)} className="lg:col-span-5 glass-card p-6">
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(245,158,11,0.1)' }}>
-                    <CreditCard size={16} style={{ color: '#FBBF24' }} />
+              <motion.div {...fadeUp(0.15)} className="lg:col-span-5 glass-card p-4 md:p-6">
+                <div className="flex items-center gap-2 mb-4 md:mb-6">
+                  <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl flex items-center justify-center" style={{ background: 'rgba(245,158,11,0.1)' }}>
+                    <CreditCard size={14} className="md:w-[16px] md:h-[16px]" style={{ color: '#FBBF24' }} />
                   </div>
-                  <h3 className="text-sm font-bold text-cream uppercase tracking-widest">Spend Breakdown</h3>
+                  <h3 className="text-xs md:text-sm font-bold text-cream uppercase tracking-widest">Spend Breakdown</h3>
                 </div>
                 {stats.totalSpend > 0 ? (
                   <DonutChart segments={stats.categoryBreakdown} size={180} />
@@ -579,13 +579,13 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
               </motion.div>
 
               {/* Heart Rate Trend (12-week) */}
-              <motion.div {...fadeUp(0.2)} className="lg:col-span-12 glass-card p-6">
-                <div className="flex items-center justify-between mb-8">
+              <motion.div {...fadeUp(0.2)} className="lg:col-span-12 glass-card p-4 md:p-6">
+                <div className="flex items-center justify-between mb-6 md:mb-8">
                   <div className="flex items-center gap-2">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(248,113,113,0.1)' }}>
-                      <Activity size={16} style={{ color: '#F87171' }} />
+                    <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl flex items-center justify-center" style={{ background: 'rgba(248,113,113,0.1)' }}>
+                      <Activity size={14} className="md:w-[16px] md:h-[16px]" style={{ color: '#F87171' }} />
                     </div>
-                    <h3 className="text-sm font-bold text-cream uppercase tracking-widest">12-Week Health Trend</h3>
+                    <h3 className="text-xs md:text-sm font-bold text-cream uppercase tracking-widest">12-Week Health Trend</h3>
                   </div>
                   <span className="smart-tag blue text-[9px]">{heartLogs.length} readings</span>
                 </div>
@@ -603,12 +603,12 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
               </motion.div>
 
               {/* Consultations by Month */}
-              <motion.div {...fadeUp(0.25)} className="lg:col-span-6 glass-card p-6">
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(96,165,250,0.1)' }}>
-                    <Calendar size={16} style={{ color: '#60A5FA' }} />
+              <motion.div {...fadeUp(0.25)} className="lg:col-span-6 glass-card p-4 md:p-6">
+                <div className="flex items-center gap-2 mb-4 md:mb-6">
+                  <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl flex items-center justify-center" style={{ background: 'rgba(96,165,250,0.1)' }}>
+                    <Calendar size={14} className="md:w-[16px] md:h-[16px]" style={{ color: '#60A5FA' }} />
                   </div>
-                  <h3 className="text-sm font-bold text-cream uppercase tracking-widest">Sessions / Month</h3>
+                  <h3 className="text-xs md:text-sm font-bold text-cream uppercase tracking-widest">Sessions / Month</h3>
                 </div>
                 {stats.totalAppointments > 0 ? (
                   <BarChart
@@ -617,17 +617,17 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
                     label="Consultations per month"
                   />
                 ) : (
-                  <EmptyState icon={<Calendar size={24} />} title="No Sessions Yet" sub="Book a consultation to track your visit history" />
+                  <EmptyState icon={<Calendar size={20} className="md:w-[24px] md:h-[24px]" />} title="No Sessions Yet" sub="Book a consultation to track your visit history" />
                 )}
               </motion.div>
 
               {/* Orders by Month */}
-              <motion.div {...fadeUp(0.3)} className="lg:col-span-6 glass-card p-6">
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(245,158,11,0.1)' }}>
-                    <ShoppingBag size={16} style={{ color: '#FBBF24' }} />
+              <motion.div {...fadeUp(0.3)} className="lg:col-span-6 glass-card p-4 md:p-6">
+                <div className="flex items-center gap-2 mb-4 md:mb-6">
+                  <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl flex items-center justify-center" style={{ background: 'rgba(245,158,11,0.1)' }}>
+                    <ShoppingBag size={14} className="md:w-[16px] md:h-[16px]" style={{ color: '#FBBF24' }} />
                   </div>
-                  <h3 className="text-sm font-bold text-cream uppercase tracking-widest">Spend / Month</h3>
+                  <h3 className="text-xs md:text-sm font-bold text-cream uppercase tracking-widest">Spend / Month</h3>
                 </div>
                 {stats.totalSpend > 0 ? (
                   <BarChart
@@ -652,30 +652,30 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
 
               {/* Summary KPIs */}
               {[
-                { label: 'Total Records',  value: invoices.length,                                    iconEl: <FileText size={16} />,   iconColor: '#34D399', bg: 'rgba(16,185,129,0.1)', delay: 0 },
-                { label: 'Consultations',  value: invoices.filter(i => i.type === 'consultation').length, iconEl: <Stethoscope size={16} />, iconColor: '#60A5FA', bg: 'rgba(96,165,250,0.1)', delay: 0.06 },
-                { label: 'Product Orders', value: invoices.filter(i => i.type === 'order').length,    iconEl: <Package size={16} />,    iconColor: '#FBBF24', bg: 'rgba(245,158,11,0.1)', delay: 0.12 },
-                { label: 'Total Billed',   value: `₹${invoices.reduce((s, i) => s + i.amount, 0).toLocaleString()}`, iconEl: <IndianRupee size={16} />, iconColor: '#A78BFA', bg: 'rgba(167,139,250,0.1)', delay: 0.18 },
+                { label: 'Total Records',  value: invoices.length,                                    iconEl: <FileText size={14} className="md:w-[16px] md:h-[16px]" />,   iconColor: '#34D399', bg: 'rgba(16,185,129,0.1)', delay: 0 },
+                { label: 'Consultations',  value: invoices.filter(i => i.type === 'consultation').length, iconEl: <Stethoscope size={14} className="md:w-[16px] md:h-[16px]" />, iconColor: '#60A5FA', bg: 'rgba(96,165,250,0.1)', delay: 0.06 },
+                { label: 'Product Orders', value: invoices.filter(i => i.type === 'order').length,    iconEl: <Package size={14} className="md:w-[16px] md:h-[16px]" />,    iconColor: '#FBBF24', bg: 'rgba(245,158,11,0.1)', delay: 0.12 },
+                { label: 'Total Billed',   value: `₹${invoices.reduce((s, i) => s + i.amount, 0).toLocaleString()}`, iconEl: <IndianRupee size={14} className="md:w-[16px] md:h-[16px]" />, iconColor: '#A78BFA', bg: 'rgba(167,139,250,0.1)', delay: 0.18 },
               ].map((c, i) => (
-                <motion.div key={i} {...fadeUp(c.delay)} className="lg:col-span-3 stat-widget">
+                <motion.div key={i} {...fadeUp(c.delay)} className="lg:col-span-3 stat-widget p-3 md:p-6">
                   <div className="flex items-center justify-between mb-2">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: c.bg }}>
+                    <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg md:rounded-xl flex items-center justify-center" style={{ background: c.bg }}>
                       <span style={{ color: c.iconColor }}>{c.iconEl}</span>
                     </div>
-                    <span className="text-[10px] uppercase tracking-widest text-cream/30">{c.label}</span>
+                    <span className="text-[9px] md:text-[10px] uppercase tracking-widest text-cream/30">{c.label}</span>
                   </div>
-                  <p className="text-2xl font-bold text-cream">{c.value}</p>
+                  <p className="text-xl md:text-2xl font-bold text-cream">{c.value}</p>
                 </motion.div>
               ))}
 
               {/* Filter Chips */}
-              <div className="lg:col-span-12 flex items-center gap-3">
-                <span className="text-xs text-cream/40 uppercase tracking-widest">Filter:</span>
+              <div className="lg:col-span-12 flex items-center gap-1.5 md:gap-3 flex-wrap">
+                <span className="text-[10px] md:text-xs text-cream/40 uppercase tracking-widest">Filter:</span>
                 {(['all', 'paid', 'pending'] as const).map(f => (
                   <button
                     key={f}
                     onClick={() => setInvoiceFilter(f)}
-                    className={`px-4 py-1.5 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${
+                    className={`px-3 py-1 md:px-4 md:py-1.5 rounded-lg md:rounded-xl text-[10px] md:text-xs font-bold uppercase tracking-widest transition-all ${
                       invoiceFilter === f
                         ? 'bg-emerald-accent text-forest'
                         : 'bg-forest/40 border border-white/5 text-cream/40 hover:text-cream/70'
@@ -684,7 +684,7 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
                     {f}
                   </button>
                 ))}
-                <span className="text-xs text-cream/20 ml-auto">
+                <span className="text-[10px] md:text-xs text-cream/20 ml-auto">
                   {filteredInvoices.length} record{filteredInvoices.length !== 1 ? 's' : ''}
                 </span>
               </div>
@@ -693,7 +693,7 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
               <motion.div {...fadeUp(0.1)} className="lg:col-span-12 glass-card overflow-hidden">
                 {filteredInvoices.length === 0 ? (
                   <EmptyState
-                    icon={<ReceiptText size={28} />}
+                    icon={<ReceiptText size={20} className="md:w-[28px] md:h-[28px]" />}
                     title={invoices.length === 0 ? 'No Invoices Generated Yet' : 'No matching records'}
                     sub={invoices.length === 0
                       ? 'Invoices are generated automatically after you pay for a consultancy or place an order.'
@@ -702,91 +702,93 @@ export default function DashboardPage({ user }: { user: FirebaseUser | null }) {
                     onCta={() => navigate('/doctors')}
                   />
                 ) : (
-                  <>
-                    {/* Table header */}
-                    <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 bg-forest/30">
-                      <span className="col-span-1 text-[10px] uppercase tracking-widest text-cream/30">Type</span>
-                      <span className="col-span-3 text-[10px] uppercase tracking-widest text-cream/30">Service</span>
-                      <span className="col-span-3 text-[10px] uppercase tracking-widest text-cream/30">Doctor / Items</span>
-                      <span className="col-span-2 text-[10px] uppercase tracking-widest text-cream/30">Date</span>
-                      <span className="col-span-1 text-[10px] uppercase tracking-widest text-cream/30 text-right">Amount</span>
-                      <span className="col-span-1 text-[10px] uppercase tracking-widest text-cream/30 text-center">Status</span>
-                      <span className="col-span-1 text-[10px] uppercase tracking-widest text-cream/30 text-center">Actions</span>
+                  <div className="overflow-x-auto scrollbar-hide">
+                    <div className="min-w-[700px]">
+                      {/* Table header */}
+                      <div className="grid grid-cols-12 gap-2 md:gap-4 px-4 md:px-6 py-3 md:py-4 border-b border-white/5 bg-forest/30">
+                        <span className="col-span-1 text-[9px] md:text-[10px] uppercase tracking-widest text-cream/30">Type</span>
+                        <span className="col-span-3 text-[9px] md:text-[10px] uppercase tracking-widest text-cream/30">Service</span>
+                        <span className="col-span-2 md:col-span-3 text-[9px] md:text-[10px] uppercase tracking-widest text-cream/30">Doctor / Items</span>
+                        <span className="col-span-2 text-[9px] md:text-[10px] uppercase tracking-widest text-cream/30">Date</span>
+                        <span className="col-span-2 md:col-span-1 text-[9px] md:text-[10px] uppercase tracking-widest text-cream/30 text-right">Amount</span>
+                        <span className="col-span-1 text-[9px] md:text-[10px] uppercase tracking-widest text-cream/30 text-center">Status</span>
+                        <span className="col-span-1 text-[9px] md:text-[10px] uppercase tracking-widest text-cream/30 text-center">Actions</span>
+                      </div>
+
+                      {filteredInvoices.map((inv, i) => (
+                        <motion.div
+                          key={inv.id}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.05 }}
+                          className="grid grid-cols-12 gap-2 md:gap-4 px-4 md:px-6 py-3 md:py-5 border-b border-white/5 last:border-0 hover:bg-white/[0.015] transition-colors items-center"
+                        >
+                          {/* Type icon */}
+                          <div className="col-span-1 flex items-center">
+                            <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: inv.type === 'consultation' ? 'rgba(96,165,250,0.1)' : 'rgba(245,158,11,0.1)' }}>
+                              {inv.type === 'consultation'
+                                ? <Stethoscope size={11} className="md:w-[13px] md:h-[13px]" style={{ color: '#60A5FA' }} />
+                                : <ShoppingBag size={11} className="md:w-[13px] md:h-[13px]" style={{ color: '#FBBF24' }} />}
+                            </div>
+                          </div>
+
+                          {/* Service */}
+                          <div className="col-span-3 flex items-center">
+                            <div>
+                              <p className="text-[11px] md:text-xs font-semibold text-cream leading-tight">{inv.service}</p>
+                              <p className="text-[9px] md:text-[10px] text-cream/30 font-mono mt-0.5">INV-{inv.id.slice(0, 8).toUpperCase()}</p>
+                            </div>
+                          </div>
+
+                          {/* Doctor / Items */}
+                          <div className="col-span-2 md:col-span-3 flex items-center">
+                            <p className="text-[11px] md:text-xs text-cream/60 truncate">
+                              {inv.type === 'consultation' ? inv.doctor : `${inv.items.length} item${inv.items.length !== 1 ? 's' : ''}`}
+                            </p>
+                          </div>
+
+                          {/* Date */}
+                          <div className="col-span-2 flex items-center">
+                            <p className="text-[11px] md:text-xs text-cream/50">
+                              {new Date(inv.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+                            </p>
+                          </div>
+
+                          {/* Amount */}
+                          <div className="col-span-2 md:col-span-1 flex items-center justify-end">
+                            <p className="text-[11px] md:text-sm font-bold text-cream">₹{inv.amount.toLocaleString()}</p>
+                          </div>
+
+                          {/* Status */}
+                          <div className="col-span-1 flex items-center justify-center">
+                            <span className={`smart-tag ${inv.status === 'paid' ? 'green' : 'gold'} text-[8px] md:text-[9px]`}>
+                              {inv.status}
+                            </span>
+                          </div>
+
+                          {/* Actions */}
+                          <div className="col-span-1 flex items-center justify-center gap-1">
+                            <button
+                              onClick={() => setPreviewInvoice(previewInvoice?.id === inv.id ? null : inv)}
+                              className="w-6 h-6 md:w-7 md:h-7 rounded-md md:rounded-lg flex items-center justify-center hover:opacity-80 transition-opacity"
+                              style={{ background: 'rgba(96,165,250,0.1)' }}
+                              title="Preview"
+                            >
+                              <Eye size={10} className="md:w-[12px] md:h-[12px]" style={{ color: '#60A5FA' }} />
+                            </button>
+                            <button
+                              onClick={() => generateInvoicePDF(inv, userName)}
+                              className="w-6 h-6 md:w-7 md:h-7 rounded-md md:rounded-lg flex items-center justify-center hover:opacity-80 transition-opacity flex-shrink-0"
+                              style={{ background: 'rgba(16,185,129,0.1)' }}
+                              title="Download PDF"
+                            >
+                              <Download size={10} className="md:w-[12px] md:h-[12px] text-emerald-accent" />
+                            </button>
+                          </div>
+                        </motion.div>
+                      ))}
                     </div>
-
-                    {filteredInvoices.map((inv, i) => (
-                      <motion.div
-                        key={inv.id}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.05 }}
-                        className="grid grid-cols-12 gap-4 px-6 py-5 border-b border-white/5 last:border-0 hover:bg-white/[0.015] transition-colors"
-                      >
-                        {/* Type icon */}
-                        <div className="col-span-1 flex items-center">
-                          <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: inv.type === 'consultation' ? 'rgba(96,165,250,0.1)' : 'rgba(245,158,11,0.1)' }}>
-                            {inv.type === 'consultation'
-                              ? <Stethoscope size={13} style={{ color: '#60A5FA' }} />
-                              : <ShoppingBag size={13} style={{ color: '#FBBF24' }} />}
-                          </div>
-                        </div>
-
-                        {/* Service */}
-                        <div className="col-span-3 flex items-center">
-                          <div>
-                            <p className="text-xs font-semibold text-cream leading-tight">{inv.service}</p>
-                            <p className="text-[10px] text-cream/30 font-mono mt-0.5">INV-{inv.id.slice(0, 8).toUpperCase()}</p>
-                          </div>
-                        </div>
-
-                        {/* Doctor / Items */}
-                        <div className="col-span-3 flex items-center">
-                          <p className="text-xs text-cream/60 truncate">
-                            {inv.type === 'consultation' ? inv.doctor : `${inv.items.length} item${inv.items.length !== 1 ? 's' : ''}`}
-                          </p>
-                        </div>
-
-                        {/* Date */}
-                        <div className="col-span-2 flex items-center">
-                          <p className="text-xs text-cream/50">
-                            {new Date(inv.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
-                          </p>
-                        </div>
-
-                        {/* Amount */}
-                        <div className="col-span-1 flex items-center justify-end">
-                          <p className="text-sm font-bold text-cream">₹{inv.amount.toLocaleString()}</p>
-                        </div>
-
-                        {/* Status */}
-                        <div className="col-span-1 flex items-center justify-center">
-                          <span className={`smart-tag ${inv.status === 'paid' ? 'green' : 'gold'} text-[9px]`}>
-                            {inv.status}
-                          </span>
-                        </div>
-
-                        {/* Actions */}
-                        <div className="col-span-1 flex items-center justify-center gap-1">
-                          <button
-                            onClick={() => setPreviewInvoice(previewInvoice?.id === inv.id ? null : inv)}
-                            className="w-7 h-7 rounded-lg flex items-center justify-center hover:opacity-80 transition-opacity"
-                            style={{ background: 'rgba(96,165,250,0.1)' }}
-                            title="Preview"
-                          >
-                            <Eye size={12} style={{ color: '#60A5FA' }} />
-                          </button>
-                          <button
-                            onClick={() => generateInvoicePDF(inv, userName)}
-                            className="w-7 h-7 rounded-lg flex items-center justify-center hover:opacity-80 transition-opacity"
-                            style={{ background: 'rgba(16,185,129,0.1)' }}
-                            title="Download PDF"
-                          >
-                            <Download size={12} className="text-emerald-accent" />
-                          </button>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </>
+                  </div>
                 )}
               </motion.div>
 

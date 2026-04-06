@@ -270,7 +270,7 @@ export default function ShopPage({ user, onLogin }: { user: FirebaseUser | null,
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4 md:px-6 relative overflow-hidden">
+    <div className="min-h-screen pt-20 pb-10 md:pt-24 md:pb-20 px-4 md:px-6 relative overflow-hidden">
       <div className="fixed inset-0 -z-10 bg-[url('/bg-page-shop.png')] bg-cover bg-center bg-no-repeat before:absolute before:inset-0 before:bg-forest/90" />
 
       {/* ── Checkout Confirmation Modal ── */}
@@ -377,29 +377,29 @@ export default function ShopPage({ user, onLogin }: { user: FirebaseUser | null,
       />
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto mb-12">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-accent/10 text-emerald-accent text-sm font-bold mb-6 border border-emerald-accent/20">
-            <Package size={16} /> Ayurvedic Medicine Shop
+      <div className="max-w-7xl mx-auto mb-6 md:mb-12">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6 md:mb-10">
+          <div className="inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-emerald-accent/10 text-emerald-accent text-[10px] md:text-sm font-bold mb-4 md:mb-6 border border-emerald-accent/20">
+            <Package size={14} className="md:w-4 md:h-4" /> Ayurvedic Medicine Shop
           </div>
-          <h1 className="text-4xl md:text-6xl font-display font-bold text-gradient mb-4">
+          <h1 className="text-3xl md:text-6xl font-display font-bold text-gradient mb-3 md:mb-4">
             Shop Ayurvedic Medicines
           </h1>
-          <p className="text-lg text-cream/60 max-w-2xl mx-auto">
+          <p className="text-xs md:text-lg text-cream/60 max-w-2xl mx-auto px-2">
             Curated collection of certified Ayurvedic medicines from trusted Indian brands.
             Buy directly from our trusted partners with safe delivery to your doorstep.
           </p>
         </motion.div>
 
         {/* Trust badges */}
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="flex flex-wrap items-center justify-center gap-6 mb-12">
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="flex flex-wrap items-center justify-center gap-3 md:gap-6 mb-6 md:mb-12 px-2">
           {[
-            { icon: <Shield size={18} />, text: "100% Authentic" },
-            { icon: <Truck size={18} />, text: "Fast Delivery" },
-            { icon: <Package size={18} />, text: "Secure Packaging" },
-            { icon: <Star size={18} />, text: "Top Rated" },
+            { icon: <Shield size={16} className="md:w-[18px] md:h-[18px]" />, text: "100% Authentic" },
+            { icon: <Truck size={16} className="md:w-[18px] md:h-[18px]" />, text: "Fast Delivery" },
+            { icon: <Package size={16} className="md:w-[18px] md:h-[18px]" />, text: "Secure Packaging" },
+            { icon: <Star size={16} className="md:w-[18px] md:h-[18px]" />, text: "Top Rated" },
           ].map((b, i) => (
-            <div key={i} className="flex items-center gap-2 text-emerald-accent/70 text-sm font-semibold">
+            <div key={i} className="flex items-center gap-1.5 md:gap-2 text-emerald-accent/70 text-[10px] md:text-sm font-semibold">
               {b.icon} {b.text}
             </div>
           ))}
@@ -407,16 +407,16 @@ export default function ShopPage({ user, onLogin }: { user: FirebaseUser | null,
 
         {/* Search & Filter Bar */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          className="flex flex-col md:flex-row gap-4 items-stretch md:items-center mb-8"
+          className="flex flex-col md:flex-row gap-3 md:gap-4 items-stretch md:items-center mb-6 md:mb-8"
         >
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-accent/40" size={20} />
+            <Search className="absolute left-3.5 md:left-4 top-1/2 -translate-y-1/2 text-emerald-accent/40 w-[16px] h-[16px] md:w-[20px] md:h-[20px]" />
             <input
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search medicines, brands..."
-              className="w-full pl-12 pr-4 py-3.5 rounded-2xl bg-moss/40 border border-white/10 text-cream placeholder:text-cream/30 focus:border-emerald-accent/40 focus:outline-none transition-colors"
+              className="w-full pl-10 md:pl-12 pr-4 py-2.5 md:py-3.5 rounded-xl md:rounded-2xl bg-moss/40 border border-white/10 text-cream text-[13px] md:text-base placeholder:text-cream/30 focus:border-emerald-accent/40 focus:outline-none transition-colors"
             />
           </div>
           <div className="flex gap-2 flex-wrap">
@@ -438,14 +438,14 @@ export default function ShopPage({ user, onLogin }: { user: FirebaseUser | null,
 
       {/* Products Grid */}
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6">
           {filtered.map((med, i) => (
             <motion.div
               key={med.id}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.06 }}
-              className="group bg-moss/30 backdrop-blur-xl border border-white/5 rounded-3xl overflow-hidden hover:border-emerald-accent/25 transition-all hover:-translate-y-1 shadow-xl shadow-black/10 flex flex-col"
+              className="group bg-moss/30 backdrop-blur-xl border border-white/5 rounded-[20px] md:rounded-3xl overflow-hidden hover:border-emerald-accent/25 transition-all hover:-translate-y-1 md:shadow-xl shadow-black/10 flex flex-col"
             >
               {/* Image */}
               <div className="relative aspect-square overflow-hidden bg-forest/60 cursor-pointer" onClick={() => setSelectedMed(med)}>
@@ -456,51 +456,53 @@ export default function ShopPage({ user, onLogin }: { user: FirebaseUser | null,
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-forest/80 via-transparent to-transparent" />
                 {med.badge && (
-                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-emerald-accent text-forest text-xs font-bold shadow-lg">
+                  <div className="absolute top-2 left-2 md:top-3 md:left-3 px-2 md:px-3 py-0.5 md:py-1 rounded-full bg-emerald-accent text-forest text-[9px] md:text-xs font-bold shadow-lg">
                     {med.badge}
                   </div>
                 )}
-                <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-full bg-forest/80 backdrop-blur-sm border border-white/10">
-                  <Star size={12} className="text-yellow-400 fill-yellow-400" />
-                  <span className="text-cream text-xs font-bold">{med.rating}</span>
+                <div className="absolute top-2 right-2 md:top-3 md:right-3 flex items-center gap-1 px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-full bg-forest/80 backdrop-blur-sm border border-white/10">
+                  <Star size={10} className="md:w-[12px] md:h-[12px] text-yellow-400 fill-yellow-400" />
+                  <span className="text-cream text-[10px] md:text-xs font-bold">{med.rating}</span>
                 </div>
               </div>
 
               {/* Info */}
-              <div className="p-5 flex-1 flex flex-col">
-                <p className="text-emerald-accent/50 text-xs font-semibold uppercase tracking-wider mb-1">{med.brand}</p>
-                <h3 className="text-cream font-bold text-base mb-1.5 leading-snug cursor-pointer hover:text-emerald-accent transition-colors" onClick={() => setSelectedMed(med)}>
+              <div className="p-3 md:p-5 flex-1 flex flex-col">
+                <p className="text-emerald-accent/50 text-[9px] md:text-xs font-semibold uppercase tracking-wider mb-1">{med.brand}</p>
+                <h3 className="text-cream font-bold text-[11px] md:text-base mb-1 md:mb-1.5 leading-snug cursor-pointer hover:text-emerald-accent transition-colors truncate md:whitespace-normal" onClick={() => setSelectedMed(med)}>
                   {med.name}
                 </h3>
-                <p className="text-cream/40 text-xs mb-3 line-clamp-2">{med.description}</p>
+                <p className="text-cream/40 text-[10px] md:text-xs mb-2 md:mb-3 line-clamp-2 md:line-clamp-3 leading-tight">{med.description}</p>
 
                 <div className="mt-auto">
-                  <div className="flex items-baseline gap-2 mb-3">
-                    <span className="text-2xl font-display font-bold text-cream">₹{med.price}</span>
-                    <span className="text-sm text-cream/30 line-through">₹{med.originalPrice}</span>
-                    <span className="text-xs font-bold text-emerald-accent bg-emerald-accent/10 px-2 py-0.5 rounded-full">
-                      {Math.round((1 - med.price / med.originalPrice) * 100)}% OFF
-                    </span>
+                  <div className="flex items-baseline md:flex-row flex-col sm:flex-row gap-1 sm:gap-2 mb-2 md:mb-3">
+                    <span className="text-[15px] md:text-2xl font-display font-bold text-cream">₹{med.price}</span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] md:text-sm text-cream/30 line-through">₹{med.originalPrice}</span>
+                      <span className="text-[8px] md:text-xs font-bold text-emerald-accent bg-emerald-accent/10 px-1.5 py-0.5 rounded-full">
+                        {Math.round((1 - med.price / med.originalPrice) * 100)}% OFF
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="flex gap-1 md:gap-2">
                     <button
                       onClick={() => addToCart(med)}
-                      className={`flex-1 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${addedId === med.id
+                      className={`flex-1 py-1.5 md:py-2.5 rounded-lg md:rounded-xl font-bold text-[10px] md:text-sm transition-all flex items-center justify-center gap-1 md:gap-2 ${addedId === med.id
                         ? 'bg-green-500 text-white'
                         : 'bg-emerald-accent text-forest hover:bg-emerald-accent/90 hover:shadow-lg hover:shadow-emerald-accent/20'
                         }`}
                     >
-                      {addedId === med.id ? <><Check size={16} /> Added!</> : <><ShoppingCart size={16} /> Add to Cart</>}
+                      {addedId === med.id ? <><Check size={11} className="md:w-[16px] md:h-[16px]" /> Added</> : <><ShoppingCart size={11} className="md:w-[16px] md:h-[16px]" /> Add</>}
                     </button>
                     <a
                       href={med.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2.5 rounded-xl bg-moss/60 border border-white/10 text-cream/60 hover:text-emerald-accent hover:border-emerald-accent/30 transition-all"
+                      className="p-1.5 md:p-2.5 rounded-lg md:rounded-xl bg-moss/60 border border-white/10 text-cream/60 hover:text-emerald-accent hover:border-emerald-accent/30 transition-all"
                       title="Buy Now"
                     >
-                      <ExternalLink size={16} />
+                      <ExternalLink size={13} className="md:w-[16px] md:h-[16px]" />
                     </a>
                   </div>
                 </div>
@@ -520,11 +522,11 @@ export default function ShopPage({ user, onLogin }: { user: FirebaseUser | null,
 
       {/* Info Banner */}
       <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-        className="max-w-5xl mx-auto mt-16 p-8 rounded-3xl bg-moss/30 border border-white/5 text-center"
+        className="max-w-5xl mx-auto mt-8 md:mt-16 p-5 md:p-8 rounded-[20px] md:rounded-3xl bg-moss/30 border border-white/5 text-center"
       >
-        <Sparkles className="text-emerald-accent mx-auto mb-4" size={28} />
-        <h3 className="text-xl font-display font-bold text-cream mb-2">Secure & Authentic</h3>
-        <p className="text-cream/50 text-sm max-w-xl mx-auto leading-relaxed">
+        <Sparkles className="text-emerald-accent mx-auto mb-3 md:mb-4 w-6 h-6 md:w-[28px] md:h-[28px]" />
+        <h3 className="text-lg md:text-xl font-display font-bold text-cream mb-1.5 md:mb-2">Secure & Authentic</h3>
+        <p className="text-cream/50 text-[11px] md:text-sm max-w-xl mx-auto leading-relaxed">
           All purchases are securely processed through our certified pharmacy partners.
           We curate the finest Ayurvedic medicines so you get genuine products every time.
         </p>
