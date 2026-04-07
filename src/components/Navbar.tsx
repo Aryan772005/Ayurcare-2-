@@ -115,7 +115,7 @@ export default function Navbar({ user, onLogin }: NavbarProps) {
                 className={`group relative flex items-center gap-2 px-3 py-2.5 rounded-xl transition-all ${
                   showPanel
                     ? 'bg-emerald-accent text-forest'
-                    : 'bg-forest/50 border border-white/8 text-cream/70 hover:text-emerald-accent hover:border-emerald-accent/30 hover:bg-emerald-accent/5'
+                    : 'bg-forest/50 border border-cream/[0.08] text-cream/70 hover:text-emerald-accent hover:border-emerald-accent/30 hover:bg-emerald-accent/5'
                 } backdrop-blur-md`}
               >
                 <div className="flex flex-col gap-[5px] w-[18px]">
@@ -232,11 +232,9 @@ export default function Navbar({ user, onLogin }: NavbarProps) {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: '-100%', opacity: 0 }}
               transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-              className="fixed top-0 left-0 h-full z-[201] flex flex-col backdrop-blur-3xl border-r shadow-2xl"
+              className="fixed top-0 left-0 h-full z-[201] flex flex-col backdrop-blur-3xl border-r shadow-2xl bg-forest/80 border-emerald-accent/20"
               style={{
                 width: 'min(360px, 85vw)',
-                background: 'rgba(10, 15, 13, 0.75)',
-                borderRight: '1px solid rgba(52, 211, 153, 0.15)',
               }}  
             >
               {/* Panel Header */}
@@ -305,7 +303,7 @@ export default function Navbar({ user, onLogin }: NavbarProps) {
                             }`}
                           >
                             {/* Icon */}
-                            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-forest/30 shadow-inner">
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-cream/[0.04] shadow-inner">
                               <item.icon size={18} className={isActive(item.to) ? 'text-forest' : `text-[${item.tagColor}]`} style={{ color: isActive(item.to) ? '#fff' : item.tagColor }} />
                             </div>
 
@@ -319,7 +317,7 @@ export default function Navbar({ user, onLogin }: NavbarProps) {
 
                             {/* Tag badge */}
                             <span
-                              className={`text-[9px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 uppercase tracking-widest ${isActive(item.to) ? 'bg-white/20 text-white' : 'bg-forest/50'}`}
+                              className={`text-[9px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 uppercase tracking-widest ${isActive(item.to) ? 'bg-white/20 text-white' : 'bg-cream/[0.04]'}`}
                               style={{ color: isActive(item.to) ? '#fff' : item.tagColor }}
                             >
                               {item.tag}
