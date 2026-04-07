@@ -181,18 +181,10 @@ export default function DiagnosisPage({ user }: { user: FirebaseUser | null }) {
 
   return (
     <div className="min-h-screen bg-forest pt-24 px-4 md:px-8 pb-20 flex flex-col relative overflow-hidden">
-      {/* Decorative background matching HomePage */}
+      {/* Static background glows — no infinite animations */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
-        <motion.div 
-          animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.15, 0.08] }}
-          transition={{ duration: 10, repeat: Infinity }}
-          className="absolute -top-1/4 -left-1/4 w-full h-full bg-emerald-accent/10 rounded-full blur-[120px]" 
-        />
-        <motion.div 
-          animate={{ scale: [1, 1.3, 1], opacity: [0.05, 0.1, 0.05] }}
-          transition={{ duration: 14, repeat: Infinity, delay: 3 }}
-          className="absolute -bottom-1/4 -right-1/4 w-3/4 h-3/4 bg-emerald-accent/5 rounded-full blur-[150px]" 
-        />
+        <div className="absolute -top-1/4 -left-1/4 w-3/4 h-3/4 bg-emerald-accent/6 rounded-full blur-[100px]" />
+        <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-emerald-accent/4 rounded-full blur-[80px]" />
       </div>
 
       <div className="max-w-7xl mx-auto w-full flex-1 flex flex-col">

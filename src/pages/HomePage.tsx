@@ -50,22 +50,22 @@ export default function HomePage({ onLogin, user }: { onLogin: () => void, user:
       ════════════════════════════════════════ */}
       <section ref={heroRef} className="relative h-screen min-h-[600px] flex flex-col items-center justify-end overflow-hidden">
 
-        {/* Video layer with scroll-zoom  */}
-        <motion.div style={{ scale: heroScale, opacity: heroOpacity }} className="absolute inset-0 z-0">
+        {/* Video layer with scroll-zoom — GPU-accelerated */}
+        <motion.div style={{ scale: heroScale, opacity: heroOpacity }} className="absolute inset-0 z-0" data-motion>
           <video
             ref={videoRef}
-            autoPlay loop muted playsInline preload="auto"
+            autoPlay loop muted playsInline preload="metadata"
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ transform: 'translateZ(0)' }}
+            style={{ transform: 'translateZ(0)', willChange: 'transform', backfaceVisibility: 'hidden' }}
           >
             <source src="/hero-video.mp4" type="video/mp4" />
           </video>
 
-          {/* Layered overlays for cinematic depth */}
-          <div className="absolute inset-0 bg-gradient-to-b from-forest/70 via-transparent to-forest" />
+          {/* Simple overlays — no extra layers */}
+          <div className="absolute inset-0 bg-gradient-to-b from-forest/70 via-transparent to-forest" style={{ transform: 'translateZ(0)' }} />
           <div className="absolute inset-0 bg-gradient-to-r from-forest/40 via-transparent to-forest/40" />
-          {/* Film-grain scanline texture */}
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
+          {/* Film-grain only on desktop — skip on mobile for perf */}
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none hidden md:block" style={{
             backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 4px)',
           }} />
         </motion.div>
@@ -172,9 +172,9 @@ export default function HomePage({ onLogin, user }: { onLogin: () => void, user:
           AI TOOLS GRID — the OMA-style section
       ════════════════════════════════════════ */}
       <section className="relative z-10 px-5 md:px-8 py-24 md:py-36 overflow-hidden">
-        {/* Ambient orb */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full blur-[130px] opacity-[0.07] pointer-events-none"
-          style={{ background: 'radial-gradient(circle, #10B981, transparent)' }} />
+        {/* Ambient orb — small, CPU-painted once, no animation */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full blur-[80px] opacity-[0.06] pointer-events-none hidden md:block"
+          style={{ background: 'radial-gradient(circle, #10B981, transparent)', transform: 'translate(-50%, -50%) translateZ(0)' }} />
 
         <div className="max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
@@ -232,8 +232,8 @@ export default function HomePage({ onLogin, user }: { onLogin: () => void, user:
           SACRED HERBS — cinematic card grid
       ════════════════════════════════════════ */}
       <section className="relative z-10 py-24 md:py-32 border-y border-white/[0.06] overflow-hidden">
-        {/* Fixed parallax bg */}
-        <div className="absolute inset-0 -z-10 bg-cover bg-center bg-fixed opacity-15"
+        {/* Static bg — bg-fixed removed (iOS broken + laggy everywhere) */}
+        <div className="absolute inset-0 -z-10 bg-cover bg-center opacity-10"
           style={{ backgroundImage: "url('/bg-herbs.png')" }} />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-forest via-transparent to-forest" />
 
@@ -323,7 +323,8 @@ export default function HomePage({ onLogin, user }: { onLogin: () => void, user:
           SHOP SECTION
       ════════════════════════════════════════ */}
       <section className="relative z-10 py-24 md:py-32 border-t border-white/[0.06] px-5 md:px-8 overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-cover bg-center bg-fixed opacity-[0.08]"
+        {/* Static bg — no bg-fixed on mobile */}
+        <div className="absolute inset-0 -z-10 bg-cover bg-center opacity-[0.06]"
           style={{ backgroundImage: "url('/bg-shop.png')" }} />
 
         <div className="max-w-6xl mx-auto">
@@ -393,10 +394,10 @@ export default function HomePage({ onLogin, user }: { onLogin: () => void, user:
           FINAL CTA — Cinematic close
       ════════════════════════════════════════ */}
       <section className="relative z-10 py-32 md:py-44 px-5 text-center overflow-hidden">
-        {/* Large radial glow */}
+        {/* Radial glow — smaller + GPU layer */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[600px] h-[600px] rounded-full blur-[100px] opacity-[0.15]"
-            style={{ background: 'radial-gradient(circle, #10B981, transparent 70%)' }} />
+          <div className="w-[350px] h-[350px] rounded-full blur-[70px] opacity-[0.12] hidden md:block"
+            style={{ background: 'radial-gradient(circle, #10B981, transparent 70%)', transform: 'translateZ(0)' }} />
         </div>
 
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}

@@ -83,12 +83,10 @@ export default function MealAnalysisPage() {
 
   return (
     <div className="min-h-screen pt-24 pb-20 px-4 md:px-6 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 -z-10">
-        <motion.div animate={{ scale: [1, 1.2, 1], opacity: [0.05, 0.12, 0.05] }} transition={{ duration: 10, repeat: Infinity }}
-          className="absolute -top-1/4 -left-1/4 w-full h-full bg-orange-500/10 rounded-full blur-[150px]" />
-        <motion.div animate={{ scale: [1, 1.3, 1], opacity: [0.04, 0.08, 0.04] }} transition={{ duration: 14, repeat: Infinity, delay: 3 }}
-          className="absolute -bottom-1/4 -right-1/4 w-3/4 h-3/4 bg-emerald-accent/5 rounded-full blur-[120px]" />
+      {/* Static background glows — no infinite animations */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div className="absolute -top-1/4 -left-1/4 w-3/4 h-3/4 bg-orange-500/5 rounded-full blur-[100px]" />
+        <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-emerald-accent/5 rounded-full blur-[80px]" />
       </div>
 
       <div className="max-w-3xl mx-auto">

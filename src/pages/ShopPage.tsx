@@ -271,7 +271,9 @@ export default function ShopPage({ user, onLogin }: { user: FirebaseUser | null,
 
   return (
     <div className="min-h-screen pt-20 pb-10 md:pt-24 md:pb-20 px-4 md:px-6 relative overflow-hidden">
-      <div className="fixed inset-0 -z-10 bg-[url('/bg-page-shop.png')] bg-cover bg-center bg-no-repeat before:absolute before:inset-0 before:bg-forest/90" />
+      <div className="fixed inset-0 -z-10 bg-cover bg-center bg-scroll bg-no-repeat" style={{ backgroundImage: "url('/bg-page-shop.png')" }}>
+        <div className="absolute inset-0" style={{ background: 'rgba(10,15,13,0.88)' }} />
+      </div>
 
       {/* ── Checkout Confirmation Modal ── */}
       <AnimatePresence>
@@ -369,11 +371,9 @@ export default function ShopPage({ user, onLogin }: { user: FirebaseUser | null,
       </AnimatePresence>
 
 
-      {/* Background decorations */}
-      <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.04, 0.08, 0.04] }}
-        transition={{ duration: 12, repeat: Infinity }}
-        className="absolute -top-1/4 -right-1/4 w-3/4 h-3/4 bg-emerald-accent/10 rounded-full blur-[150px] pointer-events-none"
+      {/* Static background glow — no infinite animation */}
+      <div
+        className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 bg-emerald-accent/5 rounded-full blur-[100px] pointer-events-none"
       />
 
       {/* Header */}

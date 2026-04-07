@@ -28,7 +28,13 @@
   background: none !important;
 }
 
-/* Base styles */
+/* ─── Base styles ─── */
+html {
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -36,7 +42,61 @@ body {
   color: var(--color-cream);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent layout bounce on scroll */
+  overscroll-behavior: none;
+  /* Smooth momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
 }
+
+/* ─── GPU Layer promotion: animated elements get their own compositor layer ─── */
+[data-motion], .motion-layer {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* ─── Cards: layout containment prevents repaint cascades ─── */
+.glass-card,
+.stat-widget,
+.feed-item {
+  contain: layout style;
+}
+
+/* ─── bg-fixed is BROKEN on iOS and laggy everywhere on mobile — disable it ─── */
+@media (max-width: 768px) {
+  [class*="bg-fixed"] {
+    background-attachment: scroll !important;
+  }
+}
+
+/* ─── Disable heavy backdrop-blur on low-end devices ─── */
+@media (max-width: 640px) {
+  [class*="backdrop-blur-3xl"],
+  [class*="backdrop-blur-2xl"],
+  [class*="backdrop-blur-xl"] {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+}
+
+/* ─── Respect reduced-motion preference ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Smooth image rendering ─── */
+img, video {
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* ─── Font display swap is set via Google Fonts display=swap param above ─── */
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
